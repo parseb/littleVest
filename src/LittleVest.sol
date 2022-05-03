@@ -3,7 +3,7 @@ pragma solidity 0.8.11;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 /// @title LittleVest
 /// @author parseb | @parseb | petra306@protonmail.com
@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 /// @dev As expected. Experimental
 /// @custom:security contact: petra306@protonmail.com
 
-contract LittleVest is ReentrancyGuard {
+contract LittleVest is ReentrancyGuard, ERC721("LittleVest", "VEST") {
 
     /// @notice storage of vesting agreements  [token][beneficiary] = vesting
     /// @dev getter function  
