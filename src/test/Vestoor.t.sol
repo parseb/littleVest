@@ -2,12 +2,12 @@
 pragma solidity 0.8.11;
 
 import {DSTestPlus} from "./utils/DSTestPlus.sol";
-import {MiniVest} from "../MiniVest.sol";
+import {LittleVest} from "../LittleVest.sol";
 import {MockERC20} from "./utils/MockERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract MiniVestTest is DSTestPlus {
-    MiniVest V;
+contract LittleVestTest is DSTestPlus {
+    LittleVest V;
     MockERC20 E;
     address eAddr;
     uint256 oneToken;
@@ -16,7 +16,7 @@ contract MiniVestTest is DSTestPlus {
     function setUp() public {
         k = 999999999999999999 * 10 **18;
         E = new MockERC20();
-        V = new MiniVest(k);
+        V = new LittleVest(k);
         oneToken = 1e18;
         eAddr = address(E);
 

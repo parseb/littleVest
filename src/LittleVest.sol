@@ -5,13 +5,13 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 
-/// @title MiniVest
+/// @title LittleVest
 /// @author parseb | @parseb | petra306@protonmail.com
 /// @notice Minimalist vesting contract study
 /// @dev As expected. Experimental
 /// @custom:security contact: petra306@protonmail.com
 
-contract MiniVest is ReentrancyGuard {
+contract LittleVest is ReentrancyGuard {
 
     /// @notice storage of vesting agreements  [token][beneficiary] = vesting
     /// @dev getter function  

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity ^0.8.0;
 
-interface IMiniVest {
+interface ILittleVest {
     /// @notice create vesting agreement
     /// @param _token ERC20 token contract address to be vested
     /// @param _beneficiary beneficiary of the vesting agreement
