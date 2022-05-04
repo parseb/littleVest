@@ -5,33 +5,33 @@ pragma solidity 0.8.11;
 /// @author parseb | @parseb | petra306@protonmail.com
 /// @custom:security contact: petra306@protonmail.com
 
-import 'parseb/vest_minimal@0.0.1-alpha/src/MiniVest.sol';
+import 'parseb/vest_minimal@0.0.4-alpha/src/MiniVest.sol';
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 
+uint256 constant k = 999999999999999999 * 10 **18;
 
-contract LittleVest is MiniVest(999999999999999999 * 10 **18), ERC721("LittleVest", "VEST") {
+contract LittleVest is ERC721("LittleVest", "VEST"), MiniVest(k) {
 
     /// @notice nft id to retunrn [Token, Beneficiarry] for vesting[][] 
     mapping(uint256 => address[2]) public idTBVest;
     uint256 tId = 1;
 
     function setVest(address _token, 
-                    address _beneficiary, 
+                    address _beneficiary,
                     uint256 _amount, 
-                    uint256 _days) 
-                    external
-                    override 
+                    uint256 _days)
+                    public
+                    override
                     returns (bool s) {
                         s = super.setVest(_token, _beneficiary, _amount, _days);
                         require(s);
-                        idTBVest[tokenId]= [_token, to];
-                        _mint(tId);
+                        idTBVest[tId]= [_token, _beneficiary];
+                        _mint(_beneficiary, tId);
                         unchecked { tId++; }
                     }
 
 
     ///// Override ERC721 Hooks
-    ///@todo ....
     function _beforeTokenTransfer(
         address from,
         address to,
@@ -39,7 +39,7 @@ contract LittleVest is MiniVest(999999999999999999 * 10 **18), ERC721("LittleVes
     ) internal override {
     
         if (from != address(0)) {
-            vestings[idTBvest[tokenId][0]][from] = 0;
+            vestings[idTBVest[tokenId][0]][from] = 0;
             idTBVest[tokenId]= [idTBVest[tokenId][0], to];
         } 
     }
@@ -49,7 +49,7 @@ contract LittleVest is MiniVest(999999999999999999 * 10 **18), ERC721("LittleVes
         address to,
         uint256 tokenId
     ) internal override {
-        vestings[idTBVest[tokenId][0]][idTBVest[tokenId][1]] = vestings[idTBVest[tokenId][0]][from];
+        if (from != address(0)) vestings[idTBVest[tokenId][0]][idTBVest[tokenId][1]] = vestings[idTBVest[tokenId][0]][from];
     }
 
 
