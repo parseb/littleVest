@@ -92,7 +92,6 @@ def test_happy_path(LittleV, mock20_0, mock20_1):
     partial2 = LittleV.getVest(mock20_1.address, accounts[3].address)
     assert partial2 > 999 * 10 ** 18
     assert LittleV.withdrawAvailable(mock20_1.address, a3).return_value == True
-    assert LittleV.balanceOf(accounts[3].address, a1) == 1
     withdrawn1 = LittleV.getVest(mock20_1.address, accounts[3].address)
     
     assert partial2 > withdrawn1
@@ -102,7 +101,9 @@ def test_happy_path(LittleV, mock20_0, mock20_1):
     ### test nft transfer withdrawal
 
     # create vest
-    assert LittleV.setVest(mock20_1.address, accounts[2].address, 100, 200, a0).return_value
+    #assert LittleV.setVest(mock20_1.address, accounts[2].address, 100, 200, a0).return_value
+    #assert LittleV.balanceOf(accounts[3].address, a1) == 1
+
     #transfer nft
 
     # receiver claims vest

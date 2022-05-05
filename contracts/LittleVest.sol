@@ -14,7 +14,10 @@ contract LittleVest is ERC721("LittleVest", "VEST"), MiniVest(k) {
 
     /// @notice nft id to retunrn [Token, Beneficiarry] for vesting[][] 
     mapping(uint256 => address[2]) public idTBVest;
-    uint256 tId = 1;
+    uint256 tId;
+
+    constructor() { tId = 1;}
+    
 
     function setVest(address _token, 
                     address _beneficiary,
