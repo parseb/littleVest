@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Little Vest</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/custom.css">
+    
+    <script src="https://unpkg.com/moralis@1.6.0/dist/moralis.js"></script>
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <headbar>
+          <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">
+                <img src="./img/vest_cropped.png" alt="little vest logo" width="44" height="44" class="d-inline-block align-text-center">
+                 <b>Little Vest</b>  
+              </a>
+        
+
+    
+            <ul class="nav navbar-nav" id="nav-right" style="float: right">
+              <button class="btn btn-outline-secondary d-none" id="btn-login">
+                <img src="./img/metamask_logo.png" width="40" /> Log In 
+              </button>
+              <button class="btn btn-outline-secondary d-none" id="btn-logout">
+                <img src="./img/metamask_logo.png" width="40" /> Log Out 
+              </button>
+            </ul>
+            </div>
+          </nav>  
+        </headbar>
+      </div>
+
+      <div class="row" id="description">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">What is Little Vest?</h5>
+              <p class="card-text">
+                <b>Little Vest is a permissionless, token agnostic protocol for linear vesting.</b><br> 
+                It allows anyone to "confer or bestow (power, authority, property, etc.) on someone" else under the form of ERC20 and ERC721 tokens.<br>
+              </p>
+              <h4>Log in to continue</h4>
+            </div>
+          </div>
+        </div>     
+      </div>
+
+      <div class="row" id="mainbody">
+        <div class="row">
+          ---- form for new ---
+        </div>
+        <div class="row">
+          ---- table list existing ---
+        </div>
+      </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./main.js"></script>
+
+  </body>
+</html>
