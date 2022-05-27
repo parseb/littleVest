@@ -15,6 +15,7 @@ contract LittleVest is ERC721("LittleVest", "VEST"), MiniVest(k) {
 
     /// @notice nft id to retunrn [Token, Beneficiarry] for vesting[][] 
     mapping(uint256 => address[2]) public idTBVest;
+    /// @notice ids belonging to user
     mapping(address => uint256[]) public userVestsId;
     uint256 tId;
 
@@ -83,6 +84,11 @@ contract LittleVest is ERC721("LittleVest", "VEST"), MiniVest(k) {
 
     function getUserVests(address _user) public view returns(uint256[] memory) {
         return userVestsId[_user];
+    }
+
+    function getVestDataFromId(uint256 _tokenId) public view returns(bytes[3] memory result ) {
+        uint256 num= vestings[idTBVest[_tokenId][0]][idTBVest[_tokenId][1]];
+        result = [abi.encodePacked(idTBVest[_tokenId][0]), abi.encodePacked(num / k), abi.encodePacked(num % k)];
     }
 
 } 

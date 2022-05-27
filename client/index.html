@@ -5,12 +5,13 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="css/custom.css">
     
-    <script src="https://unpkg.com/moralis@1.6.0/dist/moralis.js"></script>
+    <script src="https://unpkg.com/moralis@1.7.0/dist/moralis.js"></script>
 
   </head>
 
@@ -57,15 +58,63 @@
 
       <div class="row" id="mainbody">
         <div class="row">
-          ---- form for new ---
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Create New Vesting NFT
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <div class="create-form form form-control">
+                  <div class="input-group mb-3">
+                    <label for="yp-address" class="form-label p-1 m-1">What Token?</label><br>
+                    <input type="text" class="form-control" onchange="ypContractAddressChanged()" id="vesting-token" placeholder="0xa1b2f600ERC200CONTRACT000000000000example" aria-label="yp_address" aria-describedby="basic-addon2">
+                    <span class="input-group-text" id="yp-symbol">ERC20 name</span>
+                  </div>
+                  <div class="input-group mb-3">
+                    <label for="yp-address" class="form-label p-1 m-1">Beneficiary </label><br>
+                    <input type="text" class="form-control" id="beneficiary" placeholder="0xa100beneficiary00000000example00000000000000" aria-label="yp_address" aria-describedby="basic-addon2">
+                  </div>
+                  <div class="input-group mb-3">
+                    <label for="yp-amount" class="form-label p-1 m-1">How much of it?</label><br>
+                    <input type="number"  class="form-control" id="yp-amount" onchange="erc20AmountChanged()" placeholder="" aria-label="yp_amount" aria-describedby="yp_erc20"">
+                    <span class="input-group-text text-danger" id="yp-approved">amount approved</span>
+                  </div>
+                  <div class="input-group mb-3">
+                      <label for="vest_start" class="form-label p-1 m-1">(x) Days</label>
+                      <input class="form-control" type="number" placeholder="Full Amount Vests in (x) Days" id="vest-days-amount">
+                  </div>
+                  <div class="row text-center">
+                    <div class="input-group mb-3">
+                      <button class="btn btn-outline-dark block w-100" onclick="createV()">Mint Vest NFT to Beneficiaty</button><br>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="row">
-          ---- table list existing ---
+
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            My Vesting NFTs
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+          
+          </div>
         </div>
       </div>
 
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./abi/ABIs.js"></script>
     <script type="text/javascript" src="./main.js"></script>
 
   </body>
