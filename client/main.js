@@ -1,6 +1,6 @@
 /* Moralis init code */
-const serverUrl = 
-const appId = 
+const serverUrl = "https://4kazrzdsiidu.usemoralis.com:2053/server";
+const appId = "XAZoWEjFRWlsblNYZFlW2YEZr7wYzfx65WmsRpn1";
 //const Moralis = require("moralis");
 MMM = Moralis.start({ serverUrl, appId, web3Library: Web3 });
 
@@ -18,6 +18,8 @@ const ypamount = document.getElementById("yp-amount");
 const ypsymbol = document.getElementById("yp-symbol");
 const vestdays = document.getElementById("vest-days-amount");
 const beneficiary = document.getElementById("beneficiary");
+const showvests = document.getElementById("showvests");
+const vestshome = document.getElementById("vestshome");
 
 
 
@@ -28,7 +30,9 @@ let placeholder = {
   token: null,
   littleVestAddress: {
     '0x13881': '0x2272B955E9828acBA482133Dd634493Ff2aEfD4b',
-  }
+  },
+  uData: [],
+  vestListed: false,
 }
 
 
@@ -45,6 +49,7 @@ document.addEventListener("DOMContentLoaded", async function() {
    } else {
      placeholder.user= user.attributes.ethAddress;
      placeholder.chainId =  await Moralis.getChainId();
+     console.log('this is user',user);
      isuser(user);
    }
 
@@ -114,13 +119,11 @@ async function isuser(u) {
   description.classList.add("d-none");
   //btnapprove.classList.remove("d-none");
 
-  const userAddress = await Moralis.User.current().attributes.ethAddress;
-  await getUserData(u).then((vests) => { 
-    console.log(vests);
-
-  });
-
-
+  const userAddress = u.attributes.ethAddress;
+  console.log('u : ', userAddress)
+  let v = await getUserData(userAddress)
+  placeholder.uData = v;
+  console.log('getUserDataReturned: ', v);
 
 }
 
@@ -132,12 +135,12 @@ async function getAllIds(){
 
   const nftIds = await Moralis.Web3API.token.getAllTokenIds(allIdOptions);
 
-  return nftIds;
+  return nftIds.result;
 }
 
 
 async function getUserData(_user) {
-  const vests = [];
+  let vests = [];
 
   const tokenContractOptions = {
     chain: window.ethereum.chainId,
@@ -147,20 +150,21 @@ async function getUserData(_user) {
     params: {_tokenId: '0'},
   };
 
-
   const ids = await getAllIds();
-  for (let i = 0; i < ids.length; i++) {
-    element = ids[i];
-    console.log("elelement", element);
-    tokenContractOptions.params._tokenId = element.token_id;
-    const d = await Moralis.Web3API.native.runContractFunction(tokenContractOptions);
-    console.log("d", d);
-    vests.append(d);
 
-  }
+    console.log("getAllIds: ", ids);
+    ids.forEach(async (id) => {
+
+      console.log("elelement", id);
+      tokenContractOptions.params._tokenId = id.token_id;
+      const d = await Moralis.Web3API.native.runContractFunction(tokenContractOptions);
+      d.push(id);
+      console.log("d", d);
+      vests.push(d);
+  
+    });
   return vests;
 }
-
 
 
 async function ypContractAddressChanged() {
@@ -256,6 +260,58 @@ async function createV() {
   const tx = await Moralis.executeFunction(tokenContractOptions);
 
 }
+
+
+async function populateVests() {
+  if (! placeholder.vestListed) {
+    placeholder.uData.forEach(async (i)=> { 
+      console.log("i", i);
+      const tokenData = i.pop();
+      const idd = tokenData.token_id;
+      vestshome.innerHTML += `
+      <div class="row">
+        <div class="col-12">
+          <p>Token Contract:  ${i[0]}</p>
+        </div>
+        <div class="col-12">
+          <p>${parseInt(i[1],16)}</p>
+        </div>
+        <div class="col-12">
+          <p>${parseInt(i[2],16)}</p>
+        </div>
+        <div class="col-3">
+         <button class="btn btn-danger" onclick="withdrawAvailable('${i[0]}','${idd}')">Withdraw Available</button>
+        </div>
+      </div>`;
+    })
+  }
+
+  placeholder.vestListed = true;
+  //await getUserData(placeholder.user);
+
+}
+
+async function withdrawAvailable(_tAddress, _tId) {
+  const ethers = Moralis.web3Library;
+  const p = await Moralis.enableWeb3();
+  const contract = new ethers.Contract(_tAddress, LVabi, p);
+
+  const tAddr = String(_tAddress);
+  const tId = String(_tId);
+
+  const tokenContractOptions = {
+    contractAddress:  placeholder.littleVestAddress[window.ethereum.chainId],
+    functionName: "withdrawAvailable(address,uint256)",
+    abi: LVabi,
+    provider: p,
+    params: {_ERC20: tAddr, tokenId: tId},
+  };
+  
+  const tx = await Moralis.executeFunction(tokenContractOptions);
+}
+
+
+
 
 
 loginbutton.onclick = this.login;
